@@ -6,5 +6,5 @@ Android studio and SDK.
 1. run emulator
 
 To run project:
-npm install
-react-native run-android
+1. npm install
+2. react-native run-android
