@@ -5,6 +5,8 @@ import Splash from './Splash';
 import AppContainer from './Appcontainer';
 import Home from './Mainpage';
 
+//React navigation map file
+
 export const Navigator = createStackNavigator({
     Splash: { screen: Splash },
     AppContainer: { screen: AppContainer },
