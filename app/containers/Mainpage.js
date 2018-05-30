@@ -1,28 +1,40 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { createStackNavigator } from 'react-navigation';
 import {ActionCreators} from '../actions';
 import {bindActionCreators} from 'redux';
 import Button from 'react-native-smart-button';
 import _ld from 'lodash';
 import {connect} from 'react-redux';
+import styles from '../styles/Mainpage';
 
 const{
 	ScrollView,
 	View,
 	Text,
 	Image,
-	TouchableHighlight,
+	TouchableOpacity,
 	StyleSheet,
 	Keyboard,
 	TouchableWithoutFeedback,
-	NatigatorIOS,
+  NatigatorIOS,
 	TextInput,
 } = ReactNative;
 
-
-
 class Home extends Component {
+  static navigationOptions = ({navigation}) => ({
+  title: 'Main Page',
+  headerLeft: null,
+  headerRight: (
+    <Button
+      onPress={() => navigation.goBack()}
+      color="#000000"
+    >
+      <Text style={styles.logout}>Logout</Text>
+    </Button>
+  ),
+});
 
 constructor(props) {
 	  super(props);
@@ -190,20 +202,16 @@ callit(){
 		return(
 				<TouchableWithoutFeedback onPress={this.closeKeyboard}>
 					<View style={styles.scene}>
-						<View style={styles.navbar}>
-							<Text style={styles.navbarText}>Welcome {this.props.text}</Text>
-							<Text style={styles.navbarButton}>Menu</Text>
-						</View>
 						<View style={styles.searchSection}>
 							<TextInput style={styles.searchInput}
 								placeholder='Add search query...'
 								onChangeText={this.filter.bind(this)}
 							/>
-							<TouchableHighlight style={styles.searchButton} onPress={this.callit.bind(this)} >
+							<TouchableOpacity style={styles.searchButton} onPress={this.callit.bind(this)} >
 								<Text style={styles.searchButtonText}>
 									Roll Out!
 								</Text>
-							</TouchableHighlight>
+							</TouchableOpacity>
 						</View>
 						<ScrollView style={styles.scrollSection}>
 							{this.getList()}
@@ -215,81 +223,6 @@ callit(){
 }
 //{this.getList()} this was inside the scroll view
 //StyleSheet Component
-const styles= StyleSheet.create({
-	scene:{
-		flex: 1,
-		marginTop: 0,
-	},
-
-	searchSection:{
-		height: 40,
-		borderBottomColor: '#000',
-		borderBottomWidth: 1,
-		
-		flexDirection: 'row'
-	},
-	searchButton:{
-		flex: 0.3,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#D3D3D3',
-		borderWidth: 10,
-		borderRadius: 20,
-		borderColor: '#D3D3D3',
-		padding: 5,
-	},
-	searchButtonText:{
-		fontSize: 20,
-	},
-	searchBarText:{
-		fontSize: 20,
-		fontWeight: 'bold',
-		
-	},
-	scrollSection:{
-		flex: 0.8
-
-	},
-	resultText:{
-		fontSize: 20,
-		fontWeight: 'bold',
-		color: '#FFF',
-		backgroundColor: '#000'
-	},
-	resultImage:{
-		height: 150,
-	},
-	searchInput:{
-		flex: 0.7,
-		height: 40,
-		fontSize: 18,
-
-	},
-	navbar:{
-		flexDirection: 'column',
-		height: 60,
-		justifyContent: 'center'
-		
-	},
-	navbarText:{
-		fontSize: 15,
-		fontWeight: 'bold',
-		backgroundColor: 'black',
-		color: 'white',
-		paddingLeft: 15,
-		textAlign: 'center'
-	},
-	navbarButton:{
-		fontSize: 15,
-		color: 'white',
-		backgroundColor: 'black',
-		textAlign: 'left',
-		paddingLeft: 10,
-		paddingBottom: 10,
-		justifyContent: 'center'
-	}
-
-});
 
 function mapStateToProps(state){
 	//console.log("State Data",state.displaySearchedCharacters);

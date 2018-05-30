@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import ReactNative from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import {connect} from 'react-redux';
 import {ActionCreators} from '../actions';
 import {bindActionCreators} from 'redux';
 import { Actions } from 'react-native-router-flux';
 import users from '../reducers/users';
+import styles from '../styles/Appcontainer';
 const{
 	View,
 	Text,
-	TouchableHighlight,
+	TouchableOpacity,
 	TouchableWithoutFeedback,
 	TextInput,
 	Image,
@@ -22,6 +24,10 @@ const personIcon = require('../resources/signin.png');
 const lockIcon = require('../resources/password.png');
 
 export class AppContainer extends Component {
+static navigationOptions = {
+  title: 'Login Page',
+  headerLeft: null
+};
 constructor(props) {
   super(props);
   //console.log('redux state' , this.props.loginUser);
@@ -48,7 +54,8 @@ getUserDataPassed(){
 	});
 
 	console.log('redux state' , flag);
-	console.log('components state', this.state.loginFlag);*/
+  console.log('components state', this.state.loginFlag);*/
+  this.props.navigation.navigate('Home');
 }
 
 setUserDataPassed(){
@@ -148,69 +155,17 @@ closeKeyboard(){
 									value= {this.state.enterPass}
 								/>
 							</View>
-							<TouchableHighlight style={styles.buttonWrapper} onPress={() => {this.getUserDataPassed()}}>
+							<TouchableOpacity style={styles.buttonWrapper} onPress={() => {this.getUserDataPassed()}}>
 								<View style={styles.button}>
 									<Text style={styles.buttonText}>Sign In Tahass</Text>
 								</View>
-							</TouchableHighlight>
+							</TouchableOpacity>
 						</View>
 					<View style={styles.container}/>  
 				</Image>
 			</TouchableWithoutFeedback>)
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	background: {
-		width: null,
-		height: null,
-	},
-	wrapper : {
-		paddingHorizontal: 15,
-		marginBottom: 100,
-	},
-	inputWrap : {
-		flexDirection: 'row',
-		marginVertical: 10,
-		height: 50,
-		backgroundColor: 'transparent',
-	},
-	input: {
-		flex: 1,
-		paddingHorizontal: 10,
-		backgroundColor: '#FFFFFF',
-		color: '#000000', 
-	},
-	iconWrapper: {
-		paddingHorizontal: 7,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#D73352',
-	},
-	icon: {
-		width: 24,
-		height: 24,
-	},
-	button: {
-		backgroundColor: '#d73352',
-		paddingVertical: 15,
-		marginVertical: 80,
-		alignItems: 'center',
-		justifyContent: 'center',
-		alignSelf: 'center',
-		borderRadius: 20,
-		padding: 30,
-		borderWidth: 1,
-	},
-	buttonText: {
-		color: '#FFFFFF',
-		fontSize: 18,
-	}
-
-});
 
 function mapStateToProps(state){
 	//console.log("asdasd",state);

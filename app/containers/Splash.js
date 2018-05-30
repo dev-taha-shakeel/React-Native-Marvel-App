@@ -3,16 +3,23 @@ import ReactNative from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { createStackNavigator } from 'react-navigation';
 import { Actions } from 'react-native-router-flux';
+import styles from '../styles/Splash';
 
 const{
 	View,
 	Image,
-	StyleSheet,
 } = ReactNative;
 
 const background = require('../resources/splash.jpg');
   
 class Splash extends Component {
+static navigationOptions = {
+  title: "Splash",
+  headerStyle:{
+    backgroundColor:'black',
+  },
+};
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +31,7 @@ class Splash extends Component {
     setTimeout(() =>
       {
         this.setState({ visible: false }, () => {
-          this.props.navigation.navigate('AppContainer');
+          this.props.navigation.navigate('AppContainer', {title: 'Login Page'});
         })
       }, 3000);
   }
@@ -37,22 +44,12 @@ class Splash extends Component {
         >
         <Spinner
           visible={this.state.visible}
-          overlayColor={'#AARRGGBB'}
+          overlayColor={'transparent'}
           style
         />
       </Image>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  background: {
-    width: null,
-    height: null,
-  },
-});
   
 export default Splash;
