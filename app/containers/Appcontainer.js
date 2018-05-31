@@ -24,10 +24,17 @@ const personIcon = require('../resources/signin.png');
 const lockIcon = require('../resources/password.png');
 
 export class AppContainer extends Component {
-static navigationOptions = {
+static navigationOptions = ({navigation}) => ({
   title: 'Login Page',
-  headerLeft: null
-};
+  headerLeft: null,
+  // headerRight: (
+  //   <Image
+  //     source={require('../resources/hamburger.png')}
+	// 	  style={[styles.icon]}
+	// 	  onPress={() => navigation.navigate('DrawerOpen')}
+  //   />
+  // ),
+});
 constructor(props) {
   super(props);
   //console.log('redux state' , this.props.loginUser);
@@ -157,7 +164,7 @@ closeKeyboard(){
 							</View>
 							<TouchableOpacity style={styles.buttonWrapper} onPress={() => {this.getUserDataPassed()}}>
 								<View style={styles.button}>
-									<Text style={styles.buttonText}>Sign In Tahass</Text>
+									<Text style={styles.buttonText}>Sign In</Text>
 								</View>
 							</TouchableOpacity>
 						</View>
