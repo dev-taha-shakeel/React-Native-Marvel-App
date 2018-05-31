@@ -13,7 +13,7 @@ export default StyleSheet.create({
 	},
 	wrapper : {
 		paddingHorizontal: 15,
-		marginBottom: 100,
+		marginBottom: 50,
 	},
 	inputWrap : {
 		flexDirection: 'row',
@@ -40,7 +40,7 @@ export default StyleSheet.create({
 	button: {
 		backgroundColor: '#d73352',
 		paddingVertical: 15,
-		marginVertical: 80,
+		// marginVertical: 80,
 		alignItems: 'center',
 		justifyContent: 'center',
 		alignSelf: 'center',
@@ -51,5 +51,9 @@ export default StyleSheet.create({
 	buttonText: {
 		color: '#FFFFFF',
 		fontSize: 18,
+	},
+	buttonWrapper: {
+		// backgroundColor: '#ffffff',
+		paddingVertical: 15
 	}
 });

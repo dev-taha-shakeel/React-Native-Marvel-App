@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import { Actions } from 'react-native-router-flux';
 import users from '../reducers/users';
 import styles from '../styles/Appcontainer';
+import { checkIfUserExists } from '../utils/Validation';
 const{
 	View,
 	Text,
@@ -16,7 +17,8 @@ const{
 	Image,
 	AsyncStorage,
 	Keyboard,
-	StyleSheet
+	StyleSheet,
+	Alert
 } = ReactNative;
 
 const background = require('../resources/signinbackground.jpg');
@@ -38,13 +40,13 @@ static navigationOptions = ({navigation}) => ({
 constructor(props) {
   super(props);
   //console.log('redux state' , this.props.loginUser);
-  this.state = {enterName: '', enterPass: '',  loginFlag: {}};
+  this.state = {enterName: '', enterPass: '',  loginFlag: {}, storage: []};
   this.setUserDataPassed = this.setUserDataPassed.bind(this);
   this.getUserDataPassed = this.getUserDataPassed.bind(this);
 }
 
 getUserDataPassed(){
-	//console.log('huh', 'why are u being called');
+  //console.log('huh', 'why are u being called');
 	Keyboard.dismiss();
 	var dataToSet = {
 		name:'',
@@ -53,16 +55,37 @@ getUserDataPassed(){
 	console.log('name',this.state.enterName);
 	console.log('pass',this.state.enterPass);
 	dataToSet.name = this.state.enterName;
-	dataToSet.pass = this.state.enterPass;
-	console.log('datato send',dataToSet);
-	this.props.getUser(dataToSet);
-	/*this.setState = ({
-		loginFlag: flag
-	});
+  dataToSet.pass = this.state.enterPass;
+  let flag = checkIfUserExists(dataToSet, this.state.storage);
+	console.log('flag here', flag);
+	if (dataToSet.name.length === 0 || dataToSet.pass.length === 0) {
+		Alert.alert(
+      'Error',
+      'Please provide credentials',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+	  )
+	} else if (flag){
+    // this.props.getUser(dataToSet);
+    /*this.setState = ({
+      loginFlag: flag
+    });
 
-	console.log('redux state' , flag);
-  console.log('components state', this.state.loginFlag);*/
-  this.props.navigation.navigate('Home');
+    console.log('redux state' , flag);
+    console.log('components state', this.state.loginFlag);*/
+    this.props.navigation.navigate('Home');
+  } else {
+    Alert.alert(
+      'Error',
+      'Invalid Credentials',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+	  )
+  }
 }
 
 setUserDataPassed(){
@@ -96,6 +119,7 @@ componentWillMount() {
 		try{
 			AsyncStorage.setItem('userDat',JSON.stringify(userArr));
 			console.log('[data] entered');
+			this.setState({storage: userArr});
 		}
 		catch(e){
 			console.log('error', e.message);
