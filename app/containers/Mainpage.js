@@ -58,11 +58,9 @@ componentWillMount() {
 
 filter(input){
 	this.oldInput = this.state.myinput;
-	this.setState({ myinput : input }, () =>{
+	this.setState({ myinput : input, localSearch : true }, () =>{
 		console.log('State',this.state.myinput);
-	}) ;
-	this.setState({localSearch : true});
-	//console.log("Event",input);
+	});
 	var tempCharacterState = this.props.displayCharacters;
 	tempCharacterState = _ld.filter(tempCharacterState, function(user){
 		return _ld.includes(user.name.toLowerCase(), input.toLowerCase());
@@ -75,10 +73,11 @@ filter(input){
 
 searchPressed(){
 		//console.log("Pressed");
-		this.setState({searching: true});
-		this.props.marvelGetCharacters(this.state.myinput).then( () =>
-				this.setState({searching: false}));
-	}	
+  this.setState({searching: true});
+  this.props.marvelGetCharacters(this.state.myinput).then( () =>
+    this.setState({searching: false})
+  );
+}
 
 getCharacters(){
 	//console.log("Get Data now",this.props.displayCharacters);

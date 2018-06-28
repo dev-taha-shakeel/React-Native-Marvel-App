@@ -10,5 +10,5 @@ export function checkIfUserExists (userData, storageData) {
       return true;
     }
   });
-  return false;
+  return true;
 }
